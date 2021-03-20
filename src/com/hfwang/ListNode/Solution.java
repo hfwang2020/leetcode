@@ -1,3 +1,7 @@
+package com.hfwang.ListNode;
+
+import com.hfwang.ListNode.ListNode;
+
 public class Solution {
 
     public static void main(String[] args) {
