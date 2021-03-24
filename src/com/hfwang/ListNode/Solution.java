@@ -31,9 +31,9 @@ public class Solution {
     }
 
 
-    // 递归翻转链表
-    public static ListNode reverse(ListNode head) {
-        if (head.next == null)
+    // 递归翻转链表 后序遍历
+    public static ListNode reverse(ListNode head){
+        if(head.next == null)
             return head;
         ListNode last = reverse(head.next);
         head.next.next = head;
@@ -108,6 +108,44 @@ public class Solution {
                 return false;
             left ++;
             right --;
+        }
+        return true;
+    }
+
+    // 回文链表 后序遍历
+    ListNode left;
+    boolean isPalindrome1(ListNode head){
+        left = head;
+        return traverse1(head);
+    }
+
+    boolean traverse1(ListNode right){
+        if(right == null) return true;
+        boolean res = traverse1(right.next);
+        // 后序遍历
+        res =  res && (right.val == left.val);
+        left = left.next;
+        return res;
+    }
+
+    // 优化空间复杂度 快慢指针
+    boolean isPalindrome2(ListNode head){
+        ListNode slow,fast;
+        slow = fast = head;
+        while(fast.next == null && fast == null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        if(fast != null){
+            slow = slow.next;
+        }
+        ListNode left = head;
+        ListNode right = reverse(slow);
+        while(right != null){
+            if(left.val != right.val)
+                return false;
+            left = left.next;
+            right = right.next;
         }
         return true;
     }
