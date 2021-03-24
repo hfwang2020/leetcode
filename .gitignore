@@ -12,3 +12,6 @@
 /.idea/
 
 *.iml
+
+
+# 推送到github branch git push -u github master

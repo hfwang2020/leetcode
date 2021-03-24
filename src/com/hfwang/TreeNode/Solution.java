@@ -103,5 +103,62 @@ public class Solution {
         return root;
     }
 
+    // 105. 从前序与中序遍历序列构造二叉树
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        return build(preorder,0,preorder.length-1,inorder,0,inorder.length-1);
+    }
+
+    public TreeNode build(int[] preorder, int preStart, int preEnd,
+                          int[] inorder, int inStart, int inEnd) {
+        if (preStart > preEnd) {
+            return null;
+        }
+        int rootVal = preorder[preStart];
+
+        int index = 0;
+        for (int i = inStart; i <= inEnd; i++) {
+            if (inorder[i] == rootVal) {
+                index = i;
+                break;
+            }
+        }
+
+        int leftSize = index - inStart;
+        TreeNode root = new TreeNode(rootVal);
+        root.left = build(preorder, preStart + 1, preStart + leftSize,
+                inorder, inStart, inStart + leftSize - 1);
+        root.right = build(preorder, preStart + leftSize + 1, preEnd,
+                inorder, index + 1, inEnd);
+
+        return root;
+    }
+
+    // 106. 从中序与后序遍历序列构造二叉树
+    public TreeNode buildTree1(int[] inorder, int[] postorder) {
+        return build1(inorder,0,inorder.length-1,postorder,0,postorder.length-1);
+    }
+    public TreeNode build1(int[] inorder,  int inStart,  int inEnd,
+                          int[] postorder,int postStart,int postEnd){
+
+        if(inStart>=inEnd){
+            return null;
+        }
+
+        int rootVal = postorder[postEnd];
+
+        int index = -1;
+        for(int i = 0; i <= inEnd;i++){
+            if(inorder[i]==rootVal){
+                index = i;
+                break;
+            }
+        }
+        int leftSize = index - inStart;
+        TreeNode root = new TreeNode(rootVal);
+        root.left  = build(inorder,inStart,index-1,postorder,postStart,postStart+leftSize-1);
+        root.right = build(inorder,index+1,inEnd,postorder,postStart+leftSize,postEnd-1);
+
+        return root;
+    };
 
 }
