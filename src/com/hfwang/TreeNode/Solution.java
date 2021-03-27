@@ -1,6 +1,9 @@
 package com.hfwang.TreeNode;
 
 
+import java.util.HashSet;
+import java.util.LinkedList;
+
 public class Solution {
 
     void traverse0(TreeNode root) {
@@ -159,6 +162,34 @@ public class Solution {
         root.right = build(inorder,index+1,inEnd,postorder,postStart+leftSize,postEnd-1);
 
         return root;
-    };
+    }
+
+    // 652. 寻找重复的子树
+    //
+    //
+
+
+    // 230. 二叉搜索树中第K小的元素
+    public int kthSmallest(TreeNode root, int k) {
+        traverse1(root,k);
+        return res;
+    }
+
+    int res = 0;
+    int rank = 0;
+    void traverse1(TreeNode root,int k){
+        if(root == null){
+            return;
+        }
+        traverse1(root.left,k);
+        rank++;
+        if(k==rank){
+            res = root.val;
+            return;
+        }
+        traverse1(root.right,k);
+
+    }
+
 
 }
