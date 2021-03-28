@@ -192,4 +192,27 @@ public class Solution {
     }
 
 
+    // 538. 把二叉搜索树转换为累加树
+    public TreeNode convertBST(TreeNode root) {
+        traverse2(root);
+        return root;
+    }
+
+    int sum=0;
+    public void traverse2(TreeNode root){
+        if(root == null){
+            return ;
+        }
+
+        traverse2(root.right);
+        sum+=root.val;
+        root.val = sum;
+        traverse2(root.left);
+    }
+
+    // 98. 验证二叉搜索树
+
+
+
+
 }
