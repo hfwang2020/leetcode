@@ -211,6 +211,83 @@ public class Solution {
     }
 
     // 98. 验证二叉搜索树
+    // 此处leetcode测试用例卡边界值
+    long value_98 = Long.MIN_VALUE;
+    boolean res1 = true;
+    public boolean isValidBST(TreeNode root) {
+        traverse3(root);
+        return res1;
+    }
+
+    public void traverse3(TreeNode root){
+        if(root == null) return;
+        traverse3(root.left);
+        res1 = res1 && ( root.val < value_98);
+        value_98 = root.val;
+        traverse3(root.right);
+    }
+
+    // 98. 验证二叉搜索树 (dongGE)
+    boolean isValidBST1(TreeNode root) {
+        return isValidBST1(root, null, null);
+    }
+
+    /* 限定以 root 为根的子树节点必须满足 max.val > root.val > min.val */
+    boolean isValidBST1(TreeNode root, TreeNode min, TreeNode max) {
+        // base case
+        if (root == null) return true;
+        // 若 root.val 不符合 max 和 min 的限制，说明不是合法 BST
+        if (min != null && root.val <= min.val) return false;
+        if (max != null && root.val >= max.val) return false;
+        // 限定左子树的最大值是 root.val，右子树的最小值是 root.val
+        return isValidBST1(root.left, min, root)
+                && isValidBST1(root.right, root, max);
+    }
+
+    // 297. 二叉树的序列化与反序列化
+    String SEP = ",";
+    String NULL = "#";
+
+    String serialize(TreeNode root){
+        StringBuilder sb = new StringBuilder();
+        serialize(root,sb);
+        return sb.toString();
+    }
+
+    void serialize(TreeNode root,StringBuilder sb){
+        if(root == null){
+            sb.append(NULL).append(SEP);
+            return;
+        }
+
+        sb.append(root.val).append(SEP);
+        serialize(root.left,sb);
+        serialize(root.right,sb);
+
+
+    }
+
+    TreeNode deserialize(String data){
+        LinkedList<String> nodes = new LinkedList<>();
+        for(String s : data.split(SEP)){
+            nodes.addLast(s);
+        }
+        return deserialize(nodes);
+    }
+
+    TreeNode deserialize(LinkedList<String> nodes){
+        if(nodes.isEmpty()) return null;
+        String first = nodes.removeFirst();
+        if(first.equals(NULL)) return null;
+        TreeNode root = new TreeNode(Integer.parseInt(first));
+
+        root.left = deserialize(nodes);
+        root.right = deserialize(nodes);
+
+        return root;
+    }
+
+
 
 
 
